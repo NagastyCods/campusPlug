@@ -408,7 +408,7 @@ function displayCheckoutProduct() {
             // Continue to payment process (Paystack, Stripe, etc.)
             e.preventDefault();
             const processingMsg = document.getElementById("processingMsg");
-            const payNowBtn = document.getElementById("payNowBtn");
+            // const payNowBtn = document.getElementById("payNowBtn");
 
             processingMsg.style.display = "block";
             processingMsg.textContent = "Processing...";
@@ -431,35 +431,15 @@ function displayCheckoutProduct() {
                         console.log(data)
                         const popup = new PaystackPop()
                         await popup.resumeTransaction(data.body.data.access_code)
-                        // handlePaymentSucess();
-                        // alert(data.message || "Payment successful! Confirmation email sent.");
-                        // localStorage.removeItem("checkoutProduct");
                     })
                     .catch(err => {
                         console.error(err);
                         alert("Payment was successful, but we couldn't process your order automatically. Please contact support.");
                     });
-
-                //     processingMsg.style.display = "none";
-                //     payNowBtn.disabled = false;
-                //     payNowBtn.textContent = "Pay Now";
-                // },
-                //     onClose: function () {
-                //         alert('Payment window closed.');
-                //         processingMsg.style.display = "none";
-                //         payNowBtn.disabled = false;
-                //         payNowBtn.textContent = "Pay Now";
-                //     }
-                // });
-
-                // handler.openIframe();
             }, 3000);
-
+        
         }
 
-
-        // alert("Redirecting to payment...");
-        // Implement Paystack here
     });
 
 
