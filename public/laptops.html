@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>CampusPlug|laptops</title>
+</head>
+<body>
+    <div class="header">
+        <nav>
+            <div class="logo">
+                <img src="images/logo.jpg" alt="">
+                <p><a href="">CampusPlug</a></p>
+            </div>
+            <div class="hamburger-menu" onclick="toggleMenu()">
+                &#9776;
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li class="close-btn" onclick="toggleMenu()">&times;</li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+                <li><a href="account.html">Account</a></li>
+               
+            </ul>
+        </nav>
+        
+    </div>
+    <section class="products" id="products">
+        <div class="search">
+            <input type="text" name="search" id="search-input" placeholder="phone,laptops, tablets ...">
+            <button type="button" class="search-btn">Search</button>
+        </div>
+        <h2>Hot deals</h2>
+        <div class="product-row">
+            <div class="product1">
+                <h3>MacBook Pro 16"</h3>
+                <img src="images/macbookpro 14.3.jpeg" alt="">
+                <div class="prices">
+                    <p class="old-price">Ghs 5000</p>
+                    <p class="new-price">Ghs 4500</p>
+                </div>
+                <div class="btns">
+                    <button class="order-btn">Order Now</button>
+                    <button class="spec-btn">View Spec</button>
+                </div>
+            </div>
+            <div class="product1">
+                <h3>MacBook Pro 16"</h3>
+                <img src="images/macbook pro 13.jpeg" alt="">
+                <div class="prices">
+                    <p class="old-price">Ghs 5000</p>
+                    <p class="new-price">Ghs 4500</p>
+                </div>
+                <div class="btns">
+                    <button class="order-btn">Order Now</button>
+                    <button class="spec-btn">View Spec</button>
+                </div>
+            </div>
+            <div class="product1">
+                <h3>MacBook Pro 16"</h3>
+                <img src="images/macbook refur.jpeg" alt="">
+                <div class="prices">
+                    <p class="old-price">Ghs 5000</p>
+                    <p class="new-price">Ghs 4500</p>
+                </div>
+                <div class="btns">
+                    <button class="order-btn">Order Now</button>
+                    <button class="spec-btn">View Spec</button>
+            </div>
+            <!-- Add more laptop products as needed -->
+        </div>
+
+
+
+        <!-- footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>CampusPlug</h3>
+                    <p>Buy all mobile phone brand at one CampusPlug.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#products">Shop</a></li>
+                        <li><a href="aboutus.html">About Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <p>Email: campusplug@gmail.com</p>
+                    <p>Phone: +233 542900630</p>
+                    <p>Address: Accra, Ghana</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Stay Connected</h4>
+                    <div class="social-icons">
+                        <a href="https://facebook.com/campusPlug"><img src="icons/facebook.png" alt="Facebook" /></a>
+                        <a href="wa.me/0542900630"><img src="icons/whatsapp.png" alt="Twitter" /></a>
+                        <a href="#"><img src="icons/x.png" alt="Instagram" /></a>
+                    </div>
+                    <form class="newsletter">
+                        <input type="email" placeholder="Subscribe to newsletter" required />
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CampusPlug. All rights reserved.</p>
+            </div>
+        </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

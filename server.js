@@ -1,15 +1,24 @@
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 // const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3300;
+app.use(cors());
+app.use(express.json());
 
 // Serve static files from the "public" directory
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// load routes
+const orderRoutes = require('./routes/orderRoutes');
+const paymentRoutes = require('./routes/payment');
+app.use('/api/pay', paymentRoutes);
+app.use("/api", orderRoutes);
 
 // Route to serve the index.html file
 app.get('/', (req, res) => {

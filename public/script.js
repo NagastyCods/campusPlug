@@ -1,9 +1,11 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     const currentPage = window.location.pathname;
 
     if (currentPage.includes("index.html") || currentPage.endsWith("/")) {
+        tohandlesearch();
         handleViewSpecButtons();
-        handleOrderNowButtons(); 
+        handleOrderNowButtons();
     }
 
     if (currentPage.includes("viewspec.html")) {
@@ -12,8 +14,139 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (currentPage.includes("checkout.html")) {
         displayCheckoutProduct();
+        handleAuthentication();
+    }
+    if (currentPage.includes("account.html")) {
+        handleAuthentication();
+    }
+    if (currentPage.includes("laptops.html")) {
+        handleViewSpecButtons();
+        handleOrderNowButtons();
     }
 });
+// to handle sucess after payment
+function handlePaymentSucess() {
+    const container = document.getElementById("success-container");
+    container.innerHTML = ` <h2> Payment successful! </h2>
+    <p>Thank you for your purchase. Your order has been placed successfully.</p>
+    <p>We will send you a confirmation email shortly.</p>`;
+    container.style.display = "block";
+    // Clear localStorage after successful payment
+    localStorage.removeItem("checkoutProduct");
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user");
+    // Optionally redirect to home page after a delay
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 5000); // Redirect after 5 seconds
+
+
+}
+// function to handle authentication
+function handleAuthentication() {
+    const formTitle = document.getElementById("formTitle");
+    const authForm = document.getElementById("authForm");
+    const extraFields = document.getElementById("extraFields");
+    const submitBtn = document.getElementById("submitBtn");
+    const toggleLink = document.getElementById("toggleLink");
+
+    let isLoginMode = true; // start in login mode
+
+    // Toggle between login and register
+    toggleLink.addEventListener("click", () => {
+        isLoginMode = !isLoginMode;
+        if (isLoginMode) {
+            formTitle.textContent = "Login";
+            submitBtn.textContent = "Login";
+            toggleLink.textContent = "Don't have an account? Register";
+            extraFields.style.maxHeight = "0";
+            extraFields.style.opacity = "0";
+        } else {
+            formTitle.textContent = "Register";
+            submitBtn.textContent = "Register";
+            toggleLink.textContent = "Already have an account? Login";
+            extraFields.style.maxHeight = "500px";
+            extraFields.style.opacity = "1";
+        }
+    });
+
+    // Handle form submit
+    authForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (!username || !password) {
+            alert("Please fill in username and password");
+            return;
+        }
+
+        if (isLoginMode) {
+            // Login
+            const storedUser = JSON.parse(localStorage.getItem("user"));
+            if (storedUser && storedUser.username === username && storedUser.password === password) {
+                localStorage.setItem("isLoggedIn", "true");
+                alert("Login successful");
+                window.location.href = "checkout.html";
+            } else {
+                alert("Invalid credentials");
+            }
+        } else {
+            // Register
+            const address = document.getElementById("address").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const email = document.getElementById("email").value.trim();
+
+            if (!address || !phone || !email) {
+                alert("Please fill in all registration fields");
+                return;
+            }
+
+            const newUser = { username, password, address, phone, email };
+            localStorage.setItem("user", JSON.stringify(newUser));
+            localStorage.setItem("isLoggedIn", "true");
+            alert("Registration successful");
+            window.location.href = "checkout.html";
+        }
+    });
+
+}
+function tohandlesearch() {
+    const searchInput = document.getElementById("search-input");
+    const searchBtn = document.querySelector(".search-btn");
+    const routes = {
+        phone: "index.html",
+        phones: "index.html",
+        laptop: "laptops.html",
+        laptops: "laptops.html",
+        tablet: "index.html",
+        tablets: "index.html",
+        accessories: "index.html",
+    };
+
+    const handleSearch = () => {
+        const term = searchInput.value.trim().toLowerCase();
+
+        if (!term) {
+            alert("Please enter a search term");
+            return;
+        }
+
+        if (routes[term]) {
+            window.location.href = routes[term];
+        } else {
+            alert(`No results found for “${term}”`);
+        }
+    };
+
+    // Click on button
+    searchBtn.addEventListener("click", handleSearch);
+
+    // Press Enter inside input
+    searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleSearch();
+    });
+}
 
 function handleViewSpecButtons() {
     const specButtons = document.querySelectorAll(".spec-btn");
@@ -161,7 +294,7 @@ function displayProductSpec() {
         product.price,
         product.specs.availability,
         product.specs.warranty
-        
+
     ];
 
     specFields.forEach((dd, index) => {
@@ -177,19 +310,21 @@ function displayProductSpec() {
     });
 
     document.getElementById("proceed-btn").addEventListener("click", () => {
-    const specProduct = JSON.parse(localStorage.getItem("specProduct"));
+        const productName = document.querySelector(".specs dd:nth-of-type(1)").textContent.trim();
+        const productPrice = document.getElementById("spec-price").textContent.replace(/[^0-9.]/g, ""); // Extract number
+        const productImage = document.getElementById("product-image").src;
 
-    if (specProduct) {
-        const checkoutProduct = {
-            name: specProduct.name,
-            img: specProduct.img,
-            price: specProduct.price // ✅ Include price explicitly
+        // Save to localStorage
+        const productData = {
+            name: productName,
+            price: parseFloat(productPrice),
+            img: productImage
         };
+        localStorage.setItem("checkoutProduct", JSON.stringify(productData));
 
-        localStorage.setItem("checkoutProduct", JSON.stringify(checkoutProduct));
+        // Go to checkout.html
         window.location.href = "checkout.html";
-    }
-});
+    });
 
 }
 // handles ordr now buttons
@@ -227,6 +362,7 @@ function displayCheckoutProduct() {
     const totalEl = document.getElementById("total-price");
     const qtyInput = document.getElementById("product-quantity");
 
+
     // Display basic details
     nameEl.textContent = product.name;
     priceEl.textContent = parseFloat(product.price).toFixed(2);
@@ -256,9 +392,76 @@ function displayCheckoutProduct() {
         window.history.back();
     });
 
+
+
     // Pay Now button
-    document.getElementById("pay-now-btn").addEventListener("click", () => {
-        alert("Redirecting to payment...");
+    document.getElementById("pay-now-btn").addEventListener("click", (e) => {
+        const product = JSON.parse(localStorage.getItem("checkoutProduct"));
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        if (!isLoggedIn) {
+            e.preventDefault();
+            alert("Please login or register before making payment");
+            window.location.href = "account.html";
+        } else {
+            // Continue to payment process (Paystack, Stripe, etc.)
+            e.preventDefault();
+            const processingMsg = document.getElementById("processingMsg");
+            const payNowBtn = document.getElementById("payNowBtn");
+
+            processingMsg.style.display = "block";
+            processingMsg.textContent = "Processing...";
+
+            setTimeout(() => {
+                processingMsg.textContent = "Opening payment gateway...";
+
+
+
+                fetch("/api/pay", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        user,
+                        product: localStorage.getItem("checkoutProduct")
+                    })
+                })
+                    .then(res => res.json())
+                    .then(async data => {
+                        console.log(data)
+                        const popup = new PaystackPop()
+                        await popup.resumeTransaction(data.body.data.access_code)
+                        // handlePaymentSucess();
+                        // alert(data.message || "Payment successful! Confirmation email sent.");
+                        // localStorage.removeItem("checkoutProduct");
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert("Payment was successful, but we couldn't process your order automatically. Please contact support.");
+                    });
+
+                //     processingMsg.style.display = "none";
+                //     payNowBtn.disabled = false;
+                //     payNowBtn.textContent = "Pay Now";
+                // },
+                //     onClose: function () {
+                //         alert('Payment window closed.');
+                //         processingMsg.style.display = "none";
+                //         payNowBtn.disabled = false;
+                //         payNowBtn.textContent = "Pay Now";
+                //     }
+                // });
+
+                // handler.openIframe();
+            }, 3000);
+
+        }
+
+
+        // alert("Redirecting to payment...");
         // Implement Paystack here
     });
+
+
 }
+

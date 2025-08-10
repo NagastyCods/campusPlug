@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Account | Login  & Register</title>
+</head>
+<body>
+    <div class="header">
+        <nav>
+            <div class="logo">
+                <p><a href="">SupaMart</a></p>
+            </div>
+            <div class="hamburger-menu" onclick="toggleMenu()">
+                &#9776;
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li class="close-btn" onclick="toggleMenu()">&times;</li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+                <li><a href="account.html">Account</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="acc-container">
+        <h2 id="formTitle">Login</h2>
+        <form id="authForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <div id="extraFields" style="max-height:0;opacity:0">
+                <input type="address" id="address" placeholder="Address">
+                <input type="phone" id="phone" placeholder="Phone Number">
+                <input type="email" id="email" placeholder="Email" autocomplete="email">
+            </div>
+            <button type="submit" id="submitBtn">Login</button>
+        </form>
+        <div class="toggle-link" id="toggleLink">Don't have an account? Register</div>
+    </div>
+
+    <!-- fooetr -->
+     <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>CampusPlug</h3>
+                <p>Buy all mobile phone brand at one CampusPlug.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#products">Shop</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <p>Email: campusplug@gmail.com</p>
+                <p>Phone: +233 550000000</p>
+                <p>Address: Accra, Ghana</p>
+            </div>
+            <div class="footer-column">
+                <h4>Stay Connected</h4>
+                <div class="social-icons">
+                    <a href="#"><img src="icons/facebook.png" alt="Facebook" /></a>
+                    <a href="#"><img src="icons/whatsapp.png" alt="whatsapp" /></a>
+                    <a href="#"><img src="icons/x.png" alt="Twitter" /></a>
+                </div>
+                <form class="newsletter">
+                    <input type="email" placeholder="Subscribe to newsletter" required />
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CampusPlug. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
