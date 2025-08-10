@@ -16,8 +16,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // load routes
 const orderRoutes = require('./routes/orderRoutes');
 const paymentRoutes = require('./routes/payment');
+const paystackWebhookRoutes = require('./routes/webhook');
 app.use('/api/pay', paymentRoutes);
 app.use("/api", orderRoutes);
+app.use('/webhook',paystackWebhookRoutes);
 
 // Route to serve the index.html file
 app.get('/', (req, res) => {
